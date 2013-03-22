@@ -4,7 +4,7 @@ Release:        1
 License:        zlib
 Summary:        A library of functions for manipulating PNG image format files
 Url:            http://www.libpng.org/pub/png/
-Group:          System/Libraries
+Group:          Graphics/Libraries
 Source:         %{name}-%{version}.tar.bz2
 BuildRequires:  zlib-devel
 
@@ -45,6 +45,7 @@ rm -rf %{buildroot}/usr/share/man
 %postun -p /sbin/ldconfig
 
 %files
+%license LICENSE
 %{_libdir}/libpng*.so.*
 
 %files devel

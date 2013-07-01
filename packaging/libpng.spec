@@ -6,6 +6,7 @@ Summary:        A library of functions for manipulating PNG image format files
 Url:            http://www.libpng.org/pub/png/
 Group:          Graphics/Libraries
 Source:         %{name}-%{version}.tar.bz2
+Source1001: 	libpng.manifest
 BuildRequires:  zlib-devel
 
 %description
@@ -31,6 +32,7 @@ for developing programs using the PNG (Portable Network Graphics) library.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 
@@ -45,10 +47,12 @@ rm -rf %{buildroot}/usr/share/man
 %postun -p /sbin/ldconfig
 
 %files
+%manifest %{name}.manifest
 %license LICENSE
 %{_libdir}/libpng*.so.*
 
 %files devel
+%manifest %{name}.manifest
 %{_bindir}/*
 %{_includedir}/*
 %{_libdir}/libpng*.so

@@ -1,0 +1,8 @@
+Change-Id: I67c3a1f00ba76d6c679ca96e96398f8c88bd26fd
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 09:37:43 -0700
+Reviewed-on: https://review.tizen.org/gerrit/5172
+Project: platform/upstream/libpng
+Branch: refs/heads/tizen

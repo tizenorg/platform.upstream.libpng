@@ -35,7 +35,13 @@ cp %{SOURCE1001} .
 
 %build
 
-%configure --disable-static
+%configure \
+    --disable-static \
+%ifarch %arm armv7l %{aarch64}
+    --enable-arm-neon=check
+%endif
+
+
 make %{?_smp_mflags}
 
 %install

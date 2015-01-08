@@ -1,6 +1,6 @@
 Name:           libpng
 Version:        1.6.13
-Release:        1
+Release:        0
 License:        Zlib
 Summary:        A library of functions for manipulating PNG image format files
 Url:            http://www.libpng.org/pub/png/
@@ -22,7 +22,7 @@ files.
 %package devel
 Summary:        Development tools for programs to manipulate PNG image format files
 Group:          Development/Libraries
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Requires:       zlib-devel
 
 %description devel
@@ -42,7 +42,7 @@ cp %{SOURCE1001} .
 %endif
 
 
-make %{?_smp_mflags}
+%__make %{?_smp_mflags}
 
 %install
 %make_install

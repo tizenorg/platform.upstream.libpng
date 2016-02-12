@@ -223,7 +223,7 @@ BOOL png2pnm (FILE *png_file, FILE *pnm_file, FILE *alpha_file,
 
   /* create png and info structures */
 
-  png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING,
+  png_ptr = png_create_read_struct (png_get_libpng_ver(NULL),
     NULL, NULL, NULL);
   if (!png_ptr)
     return FALSE;   /* out of memory */
@@ -266,7 +266,7 @@ BOOL png2pnm (FILE *png_file, FILE *pnm_file, FILE *alpha_file,
     png_set_expand (png_ptr);
 
 #ifdef NJET
-  /* downgrade 16-bit images to 8 bit */
+  /* downgrade 16-bit images to 8-bit */
   if (bit_depth == 16)
     png_set_strip_16 (png_ptr);
   /* transform grayscale images into full-color */

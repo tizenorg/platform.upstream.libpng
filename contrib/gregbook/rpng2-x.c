@@ -43,12 +43,10 @@
     - 2.03:  deleted runtime MMX-enabling/disabling and obsolete -mmx* options
     - 2.04:  Added "void(foo);" statements to quiet pedantic compiler warnings
              about unused variables (GR-P)
-
-  TO DO:
-             use nanosleep() instead of usleep(), which is obsolete/deprecated.
+    - 2.05:  Use nanosleep() instead of usleep(), which is deprecated (GR-P).
   ---------------------------------------------------------------------------
 
-      Copyright (c) 1998-2008 Greg Roelofs.  All rights reserved.
+      Copyright (c) 1998-2010, 2014-2015 Greg Roelofs.  All rights reserved.
 
       This software is provided "as is," without warranty of any kind,
       express or implied.  In no event shall the author or contributors
@@ -103,9 +101,6 @@
 #define RESNAME   "rpng2"       /* our X resource application name */
 #define RESCLASS  "Rpng"       /* our X resource class name */
 
-/* This is temporary until the code is rewritten to use nanosleep(). */
-#define usleep(x) sleep(((x)+499999)/1000000)
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -117,6 +112,19 @@
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/keysym.h>   /* defines XK_* macros */
+
+#if _POSIX_C_SOURCE >= 199309L /* have nanosleep() */
+# undef usleep
+# define usleep(usec) {        \
+   struct timespec ts;         \
+   ts.tv_sec = 0;              \
+   ts.tv_nsec = (usec) * 1000; \
+   nanosleep(&ts, NULL); }
+#  endif
+
+#ifndef usleep /* have neither nanosleep() nor usleep() */
+#  define usleep(x) sleep(((x)+499999)/1000000)
+#endif
 
 #ifdef VMS
 #  include <unistd.h>
@@ -488,12 +496,12 @@ int main(int argc, char **argv)
           "\t\t  transparent images; overrides -bgcolor\n",
           num_bgpat-1);
 #ifdef FEATURE_LOOP
-        fprintf(stderr, 
+        fprintf(stderr,
           "    -loop\tloops through background images after initial display\n"
           "\t\t  is complete (depends on -bgpat)\n"
           "    sec \tseconds to display each background image (default = 2)\n");
 #endif
-        fprintf(stderr, 
+        fprintf(stderr,
           "    dur \tduration in microseconds to wait after displaying each\n"
           "\t\t  row (for demo purposes)\n"
           "    -timing\tenables delay for every block read, to simulate modem\n"

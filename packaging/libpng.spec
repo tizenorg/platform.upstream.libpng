@@ -35,14 +35,17 @@ cp %{SOURCE1001} .
 
 %build
 
+export CFLAGS+=" -flto -fvisibility=hidden"
+export CXXFLAGS+=" -flto -fvisibility=hidden"
 %configure \
     --disable-static \
 %ifarch %arm armv7l armv7el aarch64
     --enable-arm-neon=check
 %endif
 
+echo "setting LINKAGE_API default __attribute__ ((visibility(\"default\"))) extern" > xtra.dfa
 
-%__make %{?_smp_mflags}
+%__make DFA_XTRA=xtra.dfa %{?_smp_mflags}
 
 %install
 %make_install

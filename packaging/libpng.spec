@@ -43,9 +43,7 @@ export CXXFLAGS+=" -flto -fvisibility=hidden"
     --enable-arm-neon=check
 %endif
 
-echo "setting LINKAGE_API default __attribute__ ((visibility(\"default\"))) extern" > xtra.dfa
-
-%__make DFA_XTRA=xtra.dfa %{?_smp_mflags}
+%__make %{?_smp_mflags}
 
 %install
 %make_install

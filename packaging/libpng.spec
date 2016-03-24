@@ -34,6 +34,7 @@ for developing programs using the PNG (Portable Network Graphics) library.
 cp %{SOURCE1001} .
 
 %build
+export CFLAGS+=" -fvisibility=hidden"
 
 %configure \
     --disable-static \
